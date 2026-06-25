@@ -19,7 +19,7 @@ import ExpressMongoSanitize from 'express-mongo-sanitize';
 import xss from 'xss-clean';
 import hpp from 'hpp';
 import cookieParser from 'cookie-parser';
-
+import compression from 'compression'
 
 export const app = express();
 
@@ -114,6 +114,8 @@ app.use(
     ],
   })
 );
+
+app.use(compression())
 // 3) Routes :
 app.use('/', viewRouter);
 

@@ -404,7 +404,7 @@ const forgotPassword = catchAsync(async function (req, res, next) {
 
 const resetPassword = catchAsync(async function (req, res, next) {
   // 1) Get user based on the token
-  console.log("Enter ResetPassword")
+  // console.log("Enter ResetPassword")
   const hashedToken = crypto
     .createHash('sha256')
     .update(req.params.token)
@@ -413,7 +413,7 @@ const resetPassword = catchAsync(async function (req, res, next) {
     passwordResetToken: hashedToken,
     passwordResetExpires: { $gt: Date.now() },
   });
-  console.log(hashedToken, user)
+  // console.log(hashedToken, user)
   // 2) If token has not expired, and there is user, set the new password
   if (!user) return next(new AppError('Token is invalid or has expired', 400));
   user.password = req.body.password;

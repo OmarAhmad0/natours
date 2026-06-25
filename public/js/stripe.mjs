@@ -16,7 +16,7 @@ export const bookTour = async (tourId) => {
         window.location.replace(sessionUrl);
 
     } catch (err) {
-        console.log(err);
+        // console.log(err);
         showAlert('error', err.response?.data?.message || 'Something went wrong!');
     }
 };

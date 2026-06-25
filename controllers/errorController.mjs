@@ -1,46 +1,46 @@
 import { AppError } from '../utils/appError.mjs';
 
-const sendErrorDev = function (err,req, res) {
-  if(req.originalUrl.startsWith('/api')){
-   return res.status(err.statusCode).json({
-    status: err.status,
-    error: err,
-    message: err.message,
-    stack: err.stack,
-  });
+const sendErrorDev = function (err, req, res) {
+  if (req.originalUrl.startsWith('/api')) {
+    return res.status(err.statusCode).json({
+      status: err.status,
+      error: err,
+      message: err.message,
+      stack: err.stack,
+    });
   }
 
-  return  res.status(err.statusCode).render('error' ,{
-      title : 'Something went wrong!',
-      message: err.message
-    })
-  };
+  return res.status(err.statusCode).render('error', {
+    title: 'Something went wrong!',
+    message: err.message
+  })
+};
 
-const sendErrorProd = function (err,req, res) {
-  if(req.originalUrl.startsWith('/api')){
+const sendErrorProd = function (err, req, res) {
+  if (req.originalUrl.startsWith('/api')) {
     if (err.isOperational) {
-     return res.status(err.statusCode).json({
-      status: err.status,
-      message: err.message,
-    });
-  } 
+      return res.status(err.statusCode).json({
+        status: err.status,
+        message: err.message,
+      });
+    }
     console.error('ERROR!!', err);
-   return res.status(500).json({
+    return res.status(500).json({
       status: 'Error',
-      message: 'Please try again later' ,
+      message: 'Please try again later',
     });
-  
-} 
-  if(err.isOperational){
-     return res.status(err.statusCode).render('error' ,{
-      title : 'Error' ,
+
+  }
+  if (err.isOperational) {
+    return res.status(err.statusCode).render('error', {
+      title: 'Error',
       message: err.message
     })
-}
-  console.log("ERROR",err);
- return res.status(err.statusCode).render('error',{
-    title : 'Error',
-    message : 'Please try again later!!' 
+  }
+  console.log("ERROR", err);
+  return res.status(err.statusCode).render('error', {
+    title: 'Error',
+    message: 'Please try again later!!'
   })
 
 };
@@ -74,7 +74,7 @@ export const globalErrorHandler = function (err, req, res, next) {
   err.status = err.status || 'error';
 
   if (process.env.NODE_ENV === 'development') {
-    sendErrorDev(err,req, res);
+    sendErrorDev(err, req, res);
   } else if (process.env.NODE_ENV === 'production') {
     if (err.name === 'CastError') {
       err = handleCastErrorDB(err);
@@ -95,7 +95,7 @@ export const globalErrorHandler = function (err, req, res, next) {
     if (err.name === 'TokenExpiredError') {
       err = handleExpiredToken();
     }
-    sendErrorProd(err,req, res);
+    sendErrorProd(err, req, res);
   }
 
   next();

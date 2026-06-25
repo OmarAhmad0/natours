@@ -19,7 +19,7 @@ const server = app.listen(port, () => {
   //deleteData();
 });
 
-/*
+
 process.on('unhandledRejection', (err) => {
   console.log(err.name, err.message);
   console.log('Unhandled Rejection! Shutting down...');
@@ -35,4 +35,4 @@ process.on('uncaughtException', (err) => {
     process.exit(1);
   });
 });
-*/
+

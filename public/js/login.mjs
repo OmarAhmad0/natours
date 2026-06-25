@@ -55,7 +55,7 @@ export const signup = async (name, email, password, passwordConfirm) => {
                 location.assign('/');
             }, 2500);
         } else {
-            console.log(`Here is what happend ${res.data.status}`)
+            // console.log(`Here is what happend ${res.data.status}`)
         }
     } catch (err) {
         showAlert('error', `${err.response.data.message}`);
