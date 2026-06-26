@@ -4,7 +4,8 @@
   "description": "natours-nodejs-project",
   "main": "app.mjs",
   "scripts": {
-    "start": "nodemon server.mjs",
+    "start": "node server.mjs",
+    "dev": "nodemon server.mjs",
     "start:prod": "cross-env NODE_ENV=production nodemon server.mjs",
     "debug": "ndb server.mjs"
   },
