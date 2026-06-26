@@ -9,13 +9,13 @@ import { __dirname } from '../../utils.mjs';
 
 config({ path: './config.env' });
 
-const DB = process.env.DATABASE.replace(
-  '<PASSWORD>',
-  process.env.DATABASE_PASSWORD
-);
+// const DB = process.env.DATABASE.replace(
+//   '<PASSWORD>',
+//   process.env.DATABASE_PASSWORD
+// );
 
-const conn = await mongoose.connect(DB);
-console.log('connecting to database...');
+// const conn = await mongoose.connect(DB);
+// console.log('connecting to database...');
 
 const tours = JSON.parse(
   readFileSync(`${__dirname}/dev-data/data/tours.json`, 'utf-8')
@@ -29,9 +29,9 @@ const reviews = JSON.parse(
 
 export const importData = async function () {
   try {
-   // await Tour.create(tours);
+    await Tour.create(tours);
     await User.create(users, { validateBeforeSave: false });
-   // await Review.create(reviews);
+    await Review.create(reviews);
     console.log('data has been loaded to database');
   } catch (error) {
     console.log(error);
@@ -40,9 +40,9 @@ export const importData = async function () {
 };
 export const deleteData = async function () {
   try {
-   // await Tour.deleteMany();
+    await Tour.deleteMany();
     await User.deleteMany();
-   // await Review.deleteMany();
+    await Review.deleteMany();
     console.log('data has been deleted');
   } catch (error) {
     console.log(error);
