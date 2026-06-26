@@ -29,7 +29,7 @@ axiosInstance.interceptors.response.use(
                 await axiosInstance.post('/users/refreshToken');
                 return axiosInstance(originalRequest);
             } catch (refreshError) {
-                // We can use a direct window alert or handle it gracefully if alert.js isn't imported here
+                
                 showAlert('erorr', 'Your session has expired. Please log in again.');
                 window.setTimeout(() => location.assign('/login'), 1500);
                 return Promise.reject(refreshError);
