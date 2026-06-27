@@ -20,6 +20,7 @@ import xss from 'xss-clean';
 import hpp from 'hpp';
 import cookieParser from 'cookie-parser';
 import compression from 'compression'
+import cors from 'cors'
 
 export const app = express();
 
@@ -37,6 +38,9 @@ app.use(express.urlencoded({ extended: true, limit: '10kb' }))
 app.use(cookieParser());
 
 //app.use(helmet());
+app.use(cors());
+
+app.options('*', cors())
 
 app.use(
   helmet.contentSecurityPolicy({
