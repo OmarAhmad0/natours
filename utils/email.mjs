@@ -16,15 +16,16 @@ class Email {
   newTransport() {
     if (process.env.NODE_ENV === 'production') {
       //Resend Service For Production
-      return nodemailer.createTransport({
-        host: 'smtp.resend.com',
-        port: 465,
-        secure: true, // true for port 465
-        auth: {
-          user: 'resend',
-          pass: process.env.RESEND_API_KEY
-        }
-      });
+      // return nodemailer.createTransport({
+      //   host: 'smtp.resend.com',
+      //   port: 465,
+      //   secure: true, // true for port 465
+      //   auth: {
+      //     user: 'resend',
+      //     pass: process.env.RESEND_API_KEY
+      //   }
+      // });
+      return null;
     }
 
     return nodemailer.createTransport({
@@ -50,7 +51,8 @@ class Email {
         firstName: this.firstName,
         url: this.url,
         subject
-      })
+      }
+    )
 
     // 2) Define the email options
     const mailOption = {
@@ -60,8 +62,28 @@ class Email {
       html,
       text: convert(html, { wordwrap: 130 }),
     };
-    // 3) Create a transport and send the email
-    await this.newTransport().sendMail(mailOption);
+
+    // 3) Split sending logic clearly by environment
+    if (process.env.NODE_ENV === 'production') {
+      const resend = new Resend(process.env.RESEND_API_KEY);
+
+      const { error } = await resend.emails.send({
+        from: mailOption.from,
+        to: [mailOption.to],
+        subject: mailOption.subject,
+        html: mailOption.html,
+        text: mailOption.text
+      });
+
+      if (error) {
+        console.error('🚨 Production Email Error:', error);
+        throw new Error(`Resend Error: ${error.message}`);
+      }
+
+    } else {
+      // 3) Dev way (Nodemailer + Mailtrap)
+      await this.newTransport().sendMail(mailOption);
+    }
   }
 
   async sendWelcome() {
