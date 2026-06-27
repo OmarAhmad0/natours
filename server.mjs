@@ -39,3 +39,12 @@ process.on('uncaughtException', (err) => {
   });
 });
 
+process.on('SIGTERM', () => {
+  console.log('👋 SIGTERM RECEIVED. Shutting down gracefully...');
+
+  // 1. Stop accepting new requests
+  server.close(() => {
+    console.log('💥 Process terminated!');
+    // 2. Safely close database connections (Mongoose/MongoDB) here if needed
+  });
+});

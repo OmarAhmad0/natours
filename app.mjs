@@ -23,6 +23,8 @@ import compression from 'compression'
 
 export const app = express();
 
+app.enable('trust proxy');
+
 config({ path: './config.env' });
 // set the engine for MVC
 app.set("view engine", "pug");
