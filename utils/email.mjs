@@ -1,4 +1,5 @@
 import nodemailer from 'nodemailer';
+import { Resend } from 'resend';
 import pug from 'pug'
 import { convert } from 'html-to-text';
 import { __dirname } from '../utils.mjs'
