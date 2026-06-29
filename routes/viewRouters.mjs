@@ -1,9 +1,10 @@
 import express from 'express';
-import { getOverview, getTour, getLoginFrom, getAccount, getMyTours, getSignUpFrom } from '../controllers/viewsController.mjs';
+import { getOverview, getTour, getLoginFrom, getAccount, getMyTours, getSignUpFrom, alerts } from '../controllers/viewsController.mjs';
 import { isLoggedIn, protect } from '../controllers/authController.mjs';
-import { createBookingCheckout } from '../controllers/bookingController.mjs';
 
 const router = express.Router();
+
+router.use(alerts);
 
 router.get('/', isLoggedIn, getOverview);
 router.get('/login', isLoggedIn, getLoginFrom);

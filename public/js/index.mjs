@@ -2,6 +2,7 @@ import { login, logout, signup } from "./login.mjs";
 import { displayMap } from "./leaflet.mjs";
 import { updateSettings } from "./updateSettings.mjs";
 import { bookTour } from "./stripe.mjs";
+import { showAlert } from "./alert.mjs";
 
 // DOM
 const mapElement = document.getElementById('map');
@@ -102,3 +103,7 @@ if (signupForm) {
         signup(name, email, password, passwordConfirm);
     });
 }
+
+const alertMessage = document.querySelector('body').dataset.alert;
+
+if (alertMessage) showAlert('success', alertMessage, 20)

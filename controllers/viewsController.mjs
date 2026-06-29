@@ -93,4 +93,14 @@ const getSignUpFrom = catchAsync(async (req, res, next) => {
     title: 'Sign Up'
   });
 });
-export { getOverview, getTour, getLoginFrom, getAccount, getMyTours, getSignUpFrom };
+
+const alerts = (req, res, next) => {
+  const { alert } = req.query;
+  if (alert === 'booking') {
+    res.locals.alert = `Your booking was successful! Pleas check your Email for a confirmation.
+    \nif your booking dose not show up here immediatly, please come back later.`
+    next();
+  }
+  next();
+}
+export { getOverview, getTour, getLoginFrom, getAccount, getMyTours, getSignUpFrom, alerts };
