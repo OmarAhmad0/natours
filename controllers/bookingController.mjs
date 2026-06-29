@@ -8,10 +8,11 @@ import { createOne, getAll, getOne, updateOne, deleteOne } from '../controllers/
 
 
 //  Initialize stripe with secret key
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+const getStripeInstance = () => new Stripe(process.env.STRIPE_SECRET_KEY);
 
 
 const getCheckoutSession = catchAsync(async (req, res, next) => {
+    const stripe = getStripeInstance();
 
     // 1) Get the currently booked tour
     const tour = await Tour.findById(req.params.tourId);
@@ -78,6 +79,7 @@ const createBookingCheckout = async (session) => {
     await Booking.create({ tour, user, price });
 };
 const webhookCheckout = async (req, res, next) => {
+    const stripe = getStripeInstance();
     const signature = req.headers['stripe-signature'];
 
     let event;
