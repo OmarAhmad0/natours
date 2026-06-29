@@ -101,6 +101,5 @@ const alerts = (req, res, next) => {
     \nif your booking dose not show up here immediatly, please come back later.`
     next();
   }
-  next();
 }
 export { getOverview, getTour, getLoginFrom, getAccount, getMyTours, getSignUpFrom, alerts };
