@@ -6,6 +6,7 @@ import { router as userRouter } from './routes/userRoutes.mjs';
 import { router as reviewRouter } from './routes/reviewRoutes.mjs';
 import { router as viewRouter } from './routes/viewRouters.mjs';
 import { router as bookingRouter } from './routes/bookingRoutes.mjs';
+import { webhookCheckout } from './controllers/bookingController.mjs';
 
 import morgan from 'morgan';
 import { AppError } from './utils/appError.mjs';
@@ -31,6 +32,11 @@ config({ path: './config.env' });
 app.set("view engine", "pug");
 app.set("views", path.join(__dirname, 'views'));
 
+
+app.post(`/webhook-checkout`,
+  express.raw({ type: 'application/json' }),
+  webhookCheckout
+)
 
 // Body parser, Reading data from body into req.body
 app.use(express.json({ limit: '10kb' }));

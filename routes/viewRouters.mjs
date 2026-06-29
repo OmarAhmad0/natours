@@ -6,8 +6,8 @@ import { createBookingCheckout } from '../controllers/bookingController.mjs';
 const router = express.Router();
 
 
-
-router.get('/', createBookingCheckout, isLoggedIn, getOverview);
+// no need for it after we deploy our app and used webhook from strip
+// router.get('/', createBookingCheckout, isLoggedIn, getOverview);
 router.get('/login', isLoggedIn, getLoginFrom);
 router.get('/tour/:slug', isLoggedIn, getTour);
 router.get('/me', protect, getAccount);
